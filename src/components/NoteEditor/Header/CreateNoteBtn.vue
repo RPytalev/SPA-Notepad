@@ -1,12 +1,12 @@
 <template>
     <div class="notes-editor-header">
-        <button @click="$emit('create-new-textarea')">New Note</button>
+        <button @click="$emit('create-note')">New Note</button>
     </div>
 </template>
 
 <script>
     export default {
-        name: 'CreateNewTextareaBtn'
+        name: 'CreateNoteBtn'
     }
 </script>
 

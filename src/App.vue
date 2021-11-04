@@ -3,10 +3,10 @@
     <div class="header"><h1>App</h1></div>
     <div class="main">
       <div>
-        <NotesListDisplay :selectedNote="selectedNote" :notesList="notesList" @note-selected="noteSelected" @switch-reminder="switchReminder" @delete-note="deleteNote" />
+        <NotesListDisplay :selectedNoteId="selectedNoteId" :notesList="notesList" @note-selected="noteSelected" @switch-reminder="switchReminder" @delete-note="deleteNote" />
       </div>
       <div>
-        <NoteEditorDisplay :tagsList="tagsList" :note="note" :showNewTextarea="showNewTextarea" @create-note="createNote" @create-new-note="createNewNote" @create-new-textarea="createNewTextarea" />
+        <Note :note="selectedNote" @edit-note="editNote" @create-note="createNote" />
       </div>
     </div>
     <div class="footer"></div>
@@ -14,103 +14,93 @@
 </template>
 
 <script>
-  import NotesListDisplay from './components/NotesListDisplay.vue'
-  import NoteEditorDisplay from './components/NoteEditorDisplay.vue'
+  import NotesListDisplay from './components/NoteList/Body/NotesListDisplay.vue'
+  import Note from './components/NoteEditor/Body/Note.vue'
 
   export default {
     name: "App",
     components: {
       NotesListDisplay,
-      NoteEditorDisplay
+      Note
     },
     methods: {
-      createNote(noteNew, tagsNew) {
-        this.notesList = [...this.notesList, noteNew];
-        document.querySelector('#textarea').value = '';
-        this.notesList = this.notesList.filter(( item ) => item.id !== this.selectedNote);
-        
-        for (var i = 0; i < tagsNew.length; i++) {
-
-	        if(this.tagsList.includes(tagsNew[i], 0)) {
-	        	return;
-	        } 	
-	          this.tagsList.push(tagsNew[i]);
-            this.selectedNote = 0;
-        } 
-      },
-      createNewTextarea() {
-        this.showNewTextarea = true;
-        document.querySelector('#new-textarea').value = '';
-      },
-      createNewNote(newNote, newTags) {
-        this.notesList = [...this.notesList, newNote];
-        this.showNewTextarea = false;
-        
-        for (var i = 0; i < newTags.length; i++) {
-
-	        if(this.tagsList.includes(newTags[i], 0)) {
-	        	return;
-	        } 	
-	          this.tagsList.push(newTags[i]);
-            this.selectedNote = 0;
+      createNote() {
+        const noteNew = {
+            id: Math.floor(Math.random() * 1000),
+            rawText: 'New Note\n',
+            date: new Date(),
+            reminder: false
         }
+
+        this.notesList = [...this.notesList, noteNew];
+        this.selectedNoteId = noteNew.id;
+        //this.notesList = this.notesList.filter(( item ) => item.id !== this.selectedNoteId);
+
+        // for (var i = 0; i < tagsNew.length; i++) {
+
+	      //   if(this.tagsList.includes(tagsNew[i], 0)) {
+	      //   	return;
+	      //   } 	
+	      //     this.tagsList.push(tagsNew[i]);
+        //     this.selectedNote = 0;
+        // } 
+      },
+      editNote(noteChange) {
+        let note = this.notesList.filter(( item ) => item.id === noteChange.id)[0];
+        note.rawText = noteChange.rawText;
+        note.date = noteChange.date;
       },
       switchReminder(id) {
         this.notesList = this.notesList.map((item) => item.id == id ? {...item, reminder: !item.reminder} : item)
       },
       deleteNote() {
-            this.notesList = this.notesList.filter(( item ) => item.id !== this.selectedNote);
-            document.querySelector('#textarea').value = '';
-            this.selectedNote = 0;
-            console.log(this.note.text);
-            let selectedNoteTags = this.note.text.match(/#[a-z A-Z 0-9]+/g);
-            console.log(selectedNoteTags);
+            this.notesList = this.notesList.filter(( item ) => item.id !== this.selectedNoteId);
+            this.selectedNoteId = 1;
       },
       noteSelected(id) {
-        this.note = this.notesList.filter(( item ) => item.id == id)[0];
-        this.selectedNote = id;
+        this.selectedNoteId = id;
       },
-      findTag() {
-        let arr = this.notesList.map(( item )=> item = item.text);
-        let str = String(arr);
-        let arrTags = str.match(/#[a-z A-Z 0-9]+/g);
-        this.tagsList = this.tagsList.concat(arrTags);
-        return this.tagsList;
-      }
+      // findTag() {
+      //   let arr = this.notesList.map(( item )=> item = item.text);
+      //   let str = String(arr);
+      //   let arrTags = str.match(/#[a-z A-Z 0-9]+/g);
+      //   this.tagsList = this.tagsList.concat(arrTags);
+      //   return this.tagsList;
+      // }
     },
   data() {
     return {
       notesList: [
         {
           id: 1,
-          text: 'Meeting with Nik #meeting',
+          rawText: 'Test title 1\n test Text 1',
           date: 'November 1st 22:00 pm',
+          tags: [],
           reminder: false
         },
         {
           id: 2,
-          text: 'Shopping with wife #shopping',
+          rawText: 'Test title 2\n test Text 2',
           date: 'December 2nd 15:00 pm',
+          tags: [],
           reminder: false
         },
         {
           id: 3,
-          text: 'Nikita\'s party #party',
+          rawText: 'Test title 3\n test Text 3',
           date: 'December 3rd 7:00 am',
-          reminder: false
-        },
-        {
-          id: 4,
-          text: 'Vacation start',
-          date: 'July 15th 00:01 am',
+          tags: [],
           reminder: false
         }
       ],
-      selectedNote: 0,
-      note: {},
-      showNewTextarea: false,
-      tagsList: [],
-      noteTags: []
+      selectedNoteId: 1,
+      showNewTextarea: false
+    }
+  },
+  computed:
+  {
+    selectedNote: function() {
+      return this.notesList.filter(( item ) => item.id == this.selectedNoteId)[0];
     }
   }
 }

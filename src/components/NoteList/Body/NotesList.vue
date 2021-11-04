@@ -1,7 +1,7 @@
 <template>
     <div class="notes-list">
         <div :key="item.id" v-for="item in notesList">
-            <NotesListItem :selectedNote="selectedNote" :item="item" @note-selected="$emit('note-selected', item.id)" @switch-reminder="$emit('switch-reminder', item.id)" />
+            <NotesListItem :selectedNoteId="selectedNoteId" :item="item" @note-selected="$emit('note-selected', item.id)" @switch-reminder="$emit('switch-reminder', item.id)" />
         </div>  
     </div>  
 </template>
@@ -15,7 +15,7 @@ import NotesListItem from './NotesListItem.vue'
         },
         props: {
             notesList: Array,
-            selectedNote: Number
+            selectedNoteId: Number
         },
         emits: ['note-selected', 'switch-reminder']
     }

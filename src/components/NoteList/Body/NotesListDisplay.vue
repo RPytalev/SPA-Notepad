@@ -1,12 +1,12 @@
 <template>
     <div class="notesListDisplay">
-        <DeleteNoteBtn :deleteNoteId="deleteNoteId" @delete-note="deleteNote" />
-        <NotesList :selectedNote="selectedNote" :notesList="notesList" @note-selected="noteSelected" @switch-reminder="switchReminder" />
+        <DeleteNoteBtn @delete-note="deleteNote" />
+        <NotesList :selectedNoteId="selectedNoteId" :notesList="notesList" @note-selected="noteSelected" @switch-reminder="switchReminder" />
     </div>
 </template>
 
 <script>
-import DeleteNoteBtn from './DeleteNoteBtn.vue'
+import DeleteNoteBtn from '../Header/DeleteNoteBtn.vue'
 import NotesList from './NotesList.vue'
     export default {
         name: 'NotesListDisplay',
@@ -17,7 +17,7 @@ import NotesList from './NotesList.vue'
         props: {
             notesList: Array,
             deleteNoteId: Number,
-            selectedNote: Number
+            selectedNoteId: Number
         },
         methods: {
             switchReminder(id) {

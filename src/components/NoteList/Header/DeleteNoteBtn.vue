@@ -11,9 +11,6 @@
             deleteNote() {
                 this.$emit('delete-note');
             }
-        },
-        props: {
-            deleteNoteId: Number
         }
     }
 </script>
