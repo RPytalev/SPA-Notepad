@@ -1,5 +1,5 @@
 <template>
-    <div class="notesListDisplay">
+    <div class="notes-list-display">
         <DeleteNoteBtn @delete-note="deleteNote" />
         <NotesList :selectedNoteId="selectedNoteId" :notesList="notesList" @note-selected="noteSelected" @switch-reminder="switchReminder" />
     </div>
@@ -35,7 +35,7 @@ import NotesList from './NotesList.vue'
 </script>
 
 <style lang="sass" scoped>
-.notesListDisplay
+.notes-list-display
     width: 20rem
     height: 20rem
     margin: 1rem

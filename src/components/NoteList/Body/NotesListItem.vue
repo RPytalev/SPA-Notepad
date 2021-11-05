@@ -1,7 +1,7 @@
 <template>
     <div :class="[item.reminder ? 'reminder' : '', 'note', item.id == selectedNoteId ? 'selected' : 'note']" @click="$emit('note-selected', item.id)" @dblclick="$emit('switch-reminder', item.id)">
-        <h3>{{title}}</h3>
-        <p>{{item.date}}</p>
+        <h3>{{ title }}</h3>
+        <p>{{ item.date }}</p>
     </div>
 </template>
 
@@ -22,7 +22,6 @@
                 } else {
                     title = titleGroup[0];
                 }
-
                 return title;
             }
         }

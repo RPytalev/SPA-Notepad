@@ -6,7 +6,7 @@
         <NotesListDisplay :selectedNoteId="selectedNoteId" :notesList="notesList" @note-selected="noteSelected" @switch-reminder="switchReminder" @delete-note="deleteNote" />
       </div>
       <div>
-        <Note :note="selectedNote" @edit-note="editNote" @create-note="createNote" />
+        <NoteEditorDisplay :noteTags="noteTags" :switchNoteEditorState="switchNoteEditorState" :note="selectedNote" @edit-note="editNote" @create-note="createNote" @switch-component="switchComponent" @toggle-component="toggleComponent" />
       </div>
     </div>
     <div class="footer"></div>
@@ -15,13 +15,13 @@
 
 <script>
   import NotesListDisplay from './components/NoteList/Body/NotesListDisplay.vue'
-  import Note from './components/NoteEditor/Body/Note.vue'
+  import NoteEditorDisplay from './components/NoteEditor/Body/NoteEditorDisplay.vue'
 
   export default {
     name: "App",
     components: {
       NotesListDisplay,
-      Note
+      NoteEditorDisplay
     },
     methods: {
       createNote() {
@@ -31,9 +31,10 @@
             date: new Date(),
             reminder: false
         }
-
-        this.notesList = [...this.notesList, noteNew];
+        this.notesList.unshift(noteNew);
+        // this.notesList = [...this.notesList, noteNew];
         this.selectedNoteId = noteNew.id;
+
         //this.notesList = this.notesList.filter(( item ) => item.id !== this.selectedNoteId);
 
         // for (var i = 0; i < tagsNew.length; i++) {
@@ -49,21 +50,39 @@
         let note = this.notesList.filter(( item ) => item.id === noteChange.id)[0];
         note.rawText = noteChange.rawText;
         note.date = noteChange.date;
+        let arr = note.rawText.match(/#[a-z A-Z 0-9]+/g);
+        this.tagsList.push(...arr);
+        this.tagsList = [...new Set(this.tagsList)];
+        note.tags.push(...arr);
+        note.tags = [...new Set(note.tags)];
       },
       switchReminder(id) {
         this.notesList = this.notesList.map((item) => item.id == id ? {...item, reminder: !item.reminder} : item)
       },
       deleteNote() {
             this.notesList = this.notesList.filter(( item ) => item.id !== this.selectedNoteId);
-            this.selectedNoteId = 1;
+
+            if (this.notesList.length === 0)
+            {
+              this.createNote();
+            } else {
+              this.selectedNoteId = this.notesList[0].id;
+            }
       },
       noteSelected(id) {
         this.selectedNoteId = id;
+      },
+      switchComponent() {
+        this.switchNoteEditorState = !this.switchNoteEditorState;
+      },
+      toggleComponent() {
+        this.switchNoteEditorState = !this.switchNoteEditorState;
       },
       // findTag() {
       //   let arr = this.notesList.map(( item )=> item = item.text);
       //   let str = String(arr);
       //   let arrTags = str.match(/#[a-z A-Z 0-9]+/g);
+      //   console.log(arrTags);
       //   this.tagsList = this.tagsList.concat(arrTags);
       //   return this.tagsList;
       // }
@@ -81,7 +100,7 @@
         {
           id: 2,
           rawText: 'Test title 2\n test Text 2',
-          date: 'December 2nd 15:00 pm',
+          date: '',
           tags: [],
           reminder: false
         },
@@ -93,8 +112,9 @@
           reminder: false
         }
       ],
-      selectedNoteId: 1,
-      showNewTextarea: false
+      tagsList: [],
+      selectedNoteId: 0,
+      switchNoteEditorState: false
     }
   },
   computed:
@@ -102,12 +122,17 @@
     selectedNote: function() {
       return this.notesList.filter(( item ) => item.id == this.selectedNoteId)[0];
     }
+  },
+  created()
+  {
+    this.selectedNoteId = this.notesList[0].id;
   }
 }
 </script>
 
 <style lang="sass">
-$primary-color: #ff7800
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap')
+$primary-color: #ff5800
 $primary-background-color: rgba(0,0,0, .9)
 
 html 

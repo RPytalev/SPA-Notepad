@@ -1,6 +1,6 @@
 <template>
     <div class="tag">
-        {{item}}
+        {{ tag }}
     </div>
 </template>
 
@@ -8,7 +8,7 @@
     export default {
         name: 'Tag',
         props: {
-            item: String
+            tag: Object
         }
     }
 </script>
@@ -21,6 +21,6 @@
     padding: .1rem 1rem
     margin: .2rem .1rem
     background-color: #000
-    color: red
+    color: #fff
     border: .1rem solid #fff
 </style>

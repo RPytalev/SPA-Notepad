@@ -1,5 +1,6 @@
 <template>
-    <div class="note-edit">
+    <div class="note-edit" v-on:mouseleave="$emit('toggle-component')">
+        <div class="date">{{ note.date }}</div>
         <textarea id="textarea" name="textarea" :value="note.rawText" @change="editNote"></textarea>
     </div>
 </template>
@@ -9,6 +10,7 @@
         name: 'NoteEdit',
         methods: {
             editNote(event) {
+                
                 let rawText = event.target.value;
                 
                 const noteChange = {
@@ -28,21 +30,26 @@
 
 <style lang="sass" scoped>
 .note-edit
-    width: 10rem
-    height: 10rem
-    margin: 1rem
+    width: 100%
+    height: 100%
 
-    .title
-        width: 100%
-        height: 2rem
-        background-color: #000
-        margin: .2rem
+    .date
+        background-color: #222
         color: #fff
+        font-size: .5rem
+        text-align: left
 
     textarea
+        margin: 0
+        padding: 0
         width: 100%
         height: 100%
         border: none
-        background-color: #000
+        background-color: #222
         color: #fff
+        font-family: Montserrat
+        font-size: .8rem
+        resize: none
+        outline: none
+        overflow: auto
 </style>

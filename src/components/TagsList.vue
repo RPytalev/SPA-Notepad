@@ -1,7 +1,7 @@
 <template>
     <div class="tags-list">
-        <div class="tags" :key="item.id" v-for="item in tagsList">
-            <Tag :tagsList="tagsList" :item="item" />
+        <div class="tags" :key="item.id" v-for="item in note.tags">
+            <Tag :tag="item" />
         </div>
     </div>
     
@@ -17,7 +17,7 @@ import Tag from './Tag.vue'
             Tag
         },
         props: {
-            tagsList: Array
+            note: Object
         }
     }
 </script>

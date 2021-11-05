@@ -1,8 +1,8 @@
 <template>
-    <div>
-        <div>Title : {{ title }}</div>
-        <div>Date : {{ note.date }}</div>
-        <div>Text : {{ text }}</div>
+    <div class="note" @click="switchComponent">
+        <p class="date">{{ note.date }}</p>
+        <p class="title">{{ title }}</p>
+        <p class="text">{{ text }}</p>
     </div>
 </template>
 
@@ -11,6 +11,11 @@
         name: 'NoteView',
         props: {
             note: Object
+        },
+        methods: {
+            switchComponent() {
+                this.$emit('switch-component');
+            }
         },
         computed: {
             title: function () {
@@ -34,5 +39,29 @@
 </script>
 
 <style lang="sass" scoped>
+.note
+    display: flex
+    flex-flow: column
+    width: 100%
+    height: 100%
+    margin: 0
+    padding: 0
+    background-color: #547
+    color: #fff
+    text-align: left
+    font-family: Montserrat
+    font-size: .8rem
 
+    p
+        margin: 0
+        padding: 0 
+    
+    .date
+        font-size: .5rem
+.tags
+    display: flex
+    width: 100%
+    height: 2rem
+    background-color: #777
+    
 </style>

@@ -1,6 +1,6 @@
 <template>
     <div class="notes-editor-header">
-        <button @click="$emit('create-note')">New Note</button>
+        <button class="btn" @click="$emit('create-note')">New Note</button>
     </div>
 </template>
 
