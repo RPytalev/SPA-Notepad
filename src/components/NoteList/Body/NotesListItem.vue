@@ -45,5 +45,5 @@
     border-left: .3rem solid #ff7800
 
 .selected
-    background-color: #000
+    background-color: #942
 </style>

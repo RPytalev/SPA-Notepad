@@ -1,7 +1,10 @@
 <template>
     <div class="tags-list">
         <div class="tags" :key="item.id" v-for="item in note.tags">
-            <Tag :tag="item" />
+            <Tag 
+            :tag="item" 
+            :tagDisplayState="tagDisplayState"
+            @delete-tag="deleteTag" />
         </div>
     </div>
     
@@ -17,7 +20,13 @@ import Tag from './Tag.vue'
             Tag
         },
         props: {
-            note: Object
+            note: Object,
+            tagDisplayState: Boolean
+        },
+        methods: {
+            deleteTag(tag) {
+                this.$emit('delete-tag', tag);
+            }
         }
     }
 </script>

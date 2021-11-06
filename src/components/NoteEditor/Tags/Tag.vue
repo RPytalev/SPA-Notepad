@@ -1,6 +1,8 @@
 <template>
-    <div class="tag">
-        {{ tag }}
+    <div class="tag" v-if="tagDisplayState">
+        <div @click="deleteTag">
+            {{ tag }}
+        </div>
     </div>
 </template>
 
@@ -8,7 +10,13 @@
     export default {
         name: 'Tag',
         props: {
-            tag: Object
+            tag: String,
+            tagDisplayState: Boolean
+        },
+        methods: {
+            deleteTag() {
+                this.$emit('delete-tag', this.tag);
+            }
         }
     }
 </script>

@@ -1,26 +1,32 @@
 <template>
-    <div class="notes-editor-header">
-        <button class="btn" @click="$emit('create-note')">New Note</button>
+    <div class="btn">
+        <button @click="createNote">New Note</button>
     </div>
 </template>
 
 <script>
     export default {
-        name: 'CreateNoteBtn'
+        name: 'CreateNoteBtn',
+        methods: {
+            createNote() {
+                this.$emit('create-note');
+            }
+        }
     }
 </script>
 
 <style lang="sass" scoped>
-.notes-editor-header 
+.btn 
     display: flex
     justify-content: flex-start
     align-items: center
     width: 100%
-    height: 4rem
+    height: 2rem
     background-color: orange
 
     button
-        width: 10rem
+        width: 5rem
         height: 2rem
+        margin: 0 .2rem
         background-color: green
 </style>

@@ -1,32 +1,49 @@
 <template>
     <div class="note-editor-display">
         <div class="header">
-            <CreateNoteBtn @create-note="$emit('create-note')" />
+            <div class="button">
+                <CreateNoteBtn @create-note="createNote" />
+            </div>
+            <div class="search-area">
+                <SearchTagsArea 
+                @search-tag="searchTag" 
+                @tag-input="tagInput" />
+            </div>
         </div>
         <div class="display">
             <div class="textarea" v-show="switchNoteEditorState">
-                <NoteEdit :note="note" @edit-note="editNote" @toggle-component="$emit('toggle-component')" />
+                <NoteEdit 
+                :note="note" 
+                @edit-note="editNote" 
+                @toggle-component="toggleComponent" />
             </div>
             <div class="note-view" v-show="!switchNoteEditorState">
-                <NoteView :note="note" @switch-component="$emit('switch-component')" />
+                <NoteView 
+                :note="note" 
+                @switch-component="switchComponent" />
             </div>
         </div>
         <div class="tags-list">
-            <TagsList :note="note" />
+            <TagsList 
+            :note="note"
+            :tagDisplayState="tagDisplayState"
+            @delete-tag="deleteTag" />
         </div>
     </div>
 </template>
 
 <script>
     import CreateNoteBtn from '../Header/CreateNoteBtn.vue'
+    import SearchTagsArea from '../Header/SearchTagsArea.vue'
     import NoteEdit from './NoteEdit.vue'
     import NoteView from './NoteView.vue'
-    import TagsList from '../../TagsList.vue'
+    import TagsList from '../Tags/TagsList.vue'
 
     export default {
         name: 'NoteEditorDisplay',
         components: {
             CreateNoteBtn,
+            SearchTagsArea,
             NoteEdit,
             NoteView,
             TagsList
@@ -34,13 +51,31 @@
         props: {
             note: Object,
             switchNoteEditorState: Boolean,
+            tagDisplayState: Boolean
         },
         methods: {
+            createNote() {
+                this.$emit('create-note');
+            },
             editNote(noteChange) {
                 this.$emit('edit-note', noteChange)
+            },
+            tagInput(inputTag, event) {
+                this.$emit('tag-input', inputTag, event)
+            },
+            deleteTag(tag) {
+                this.$emit('delete-tag', tag);
+            },
+            searchTag() {
+                this.$emit('search-tag');
+            },
+            toggleComponent() {
+                this.$emit('toggle-component');
+            },
+            switchComponent() {
+                this.$emit('switch-component');
             }
-        },
-        emits: ['switch-component', 'toggle-component', 'create-note']
+        }
     }
 </script>
 
@@ -50,6 +85,7 @@
     flex-flow: column
     width: 20rem
     height: 20rem
+    margin: 1rem
 
     .header
         display: flex

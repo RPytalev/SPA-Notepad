@@ -51,6 +51,8 @@
     text-align: left
     font-family: Montserrat
     font-size: .8rem
+    overflow-x: hidden
+    overflow-y: auto
 
     p
         margin: 0

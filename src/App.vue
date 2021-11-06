@@ -3,10 +3,27 @@
     <div class="header"><h1>App</h1></div>
     <div class="main">
       <div>
-        <NotesListDisplay :selectedNoteId="selectedNoteId" :notesList="notesList" @note-selected="noteSelected" @switch-reminder="switchReminder" @delete-note="deleteNote" />
+        <NotesListDisplay 
+        :selectedNoteId="selectedNoteId" 
+        :notesList="notesList" 
+        :notesListSelectedTag="notesListSelectedTag"
+        :switchLists="switchLists"
+        @note-selected="noteSelected" 
+        @switch-reminder="switchReminder" 
+        @delete-note="deleteNote" />
       </div>
       <div>
-        <NoteEditorDisplay :noteTags="noteTags" :switchNoteEditorState="switchNoteEditorState" :note="selectedNote" @edit-note="editNote" @create-note="createNote" @switch-component="switchComponent" @toggle-component="toggleComponent" />
+        <NoteEditorDisplay 
+        :switchNoteEditorState="switchNoteEditorState" 
+        :note="selectedNote" 
+        :tagDisplayState="tagDisplayState"
+        @create-note="createNote" 
+        @edit-note="editNote" 
+        @switch-component="switchComponent" 
+        @toggle-component="toggleComponent" 
+        @search-tag="searchTag"
+        @tag-input="tagInput"
+        @delete-tag="deleteTag" />
       </div>
     </div>
     <div class="footer"></div>
@@ -29,22 +46,11 @@
             id: Math.floor(Math.random() * 1000),
             rawText: 'New Note\n',
             date: new Date(),
+            tags: [],
             reminder: false
         }
         this.notesList.unshift(noteNew);
-        // this.notesList = [...this.notesList, noteNew];
         this.selectedNoteId = noteNew.id;
-
-        //this.notesList = this.notesList.filter(( item ) => item.id !== this.selectedNoteId);
-
-        // for (var i = 0; i < tagsNew.length; i++) {
-
-	      //   if(this.tagsList.includes(tagsNew[i], 0)) {
-	      //   	return;
-	      //   } 	
-	      //     this.tagsList.push(tagsNew[i]);
-        //     this.selectedNote = 0;
-        // } 
       },
       editNote(noteChange) {
         let note = this.notesList.filter(( item ) => item.id === noteChange.id)[0];
@@ -55,6 +61,13 @@
         this.tagsList = [...new Set(this.tagsList)];
         note.tags.push(...arr);
         note.tags = [...new Set(note.tags)];
+        if (this.switchLists === false) {
+          this.switchLists = !this.switchLists;
+          this.tagDisplayState = !this.tagDisplayState;
+        }
+        if (this.tagDisplayState === false) {
+          this.tagDisplayState = !this.tagDisplayState;
+        }
       },
       switchReminder(id) {
         this.notesList = this.notesList.map((item) => item.id == id ? {...item, reminder: !item.reminder} : item)
@@ -78,14 +91,36 @@
       toggleComponent() {
         this.switchNoteEditorState = !this.switchNoteEditorState;
       },
-      // findTag() {
-      //   let arr = this.notesList.map(( item )=> item = item.text);
-      //   let str = String(arr);
-      //   let arrTags = str.match(/#[a-z A-Z 0-9]+/g);
-      //   console.log(arrTags);
-      //   this.tagsList = this.tagsList.concat(arrTags);
-      //   return this.tagsList;
-      // }
+      searchTag() {
+
+        if (this.tagsList.includes(this.inputTag, 0)) {
+
+          let arr = this.notesList.filter( ( item ) => String(item.tags) === this.inputTag );
+          console.log(arr);
+          this.notesListSelectedTag = this.notesListSelectedTag.concat(arr);
+          console.log(this.notesListSelectedTag);
+          this.switchLists = !this.switchLists;
+
+        } else {
+          let stateConfirm = confirm('There is no tag. Would you like save it?');
+          if (stateConfirm) {
+          this.tagsList.push(this.inputTag);
+          this.inputTag = '';
+        }
+        }
+        this.inputEvent.target.value = '';
+      },
+      tagInput(inputTag, event) {
+        this.inputTag = inputTag;
+        this.inputEvent = event;
+      },
+      deleteTag(tag) {
+        let stateConfirm = confirm('Are you sure?');
+        if (stateConfirm) {
+          this.tagsList = this.tagsList.filter((item) => String(item) !== tag);
+          this.tagDisplayState = !this.tagDisplayState;
+        }
+      }
     },
   data() {
     return {
@@ -93,28 +128,33 @@
         {
           id: 1,
           rawText: 'Test title 1\n test Text 1',
-          date: 'November 1st 22:00 pm',
+          date: new Date(),
           tags: [],
           reminder: false
         },
         {
           id: 2,
           rawText: 'Test title 2\n test Text 2',
-          date: '',
+          date: new Date(),
           tags: [],
           reminder: false
         },
         {
           id: 3,
           rawText: 'Test title 3\n test Text 3',
-          date: 'December 3rd 7:00 am',
+          date: new Date(),
           tags: [],
           reminder: false
         }
       ],
       tagsList: [],
       selectedNoteId: 0,
-      switchNoteEditorState: false
+      switchNoteEditorState: false,
+      inputTag: '',
+      inputEvent: {},
+      notesListSelectedTag: [],
+      switchLists: true,
+      tagDisplayState: true
     }
   },
   computed:

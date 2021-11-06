@@ -1,7 +1,11 @@
 <template>
     <div class="notes-list">
         <div :key="item.id" v-for="item in notesList">
-            <NotesListItem :selectedNoteId="selectedNoteId" :item="item" @note-selected="$emit('note-selected', item.id)" @switch-reminder="$emit('switch-reminder', item.id)" />
+            <NotesListItem 
+            :selectedNoteId="selectedNoteId" 
+            :item="item" 
+            @note-selected="$emit('note-selected', item.id)" 
+            @switch-reminder="$emit('switch-reminder', item.id)" />
         </div>  
     </div>  
 </template>

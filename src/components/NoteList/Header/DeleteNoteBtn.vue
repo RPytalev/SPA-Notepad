@@ -1,12 +1,17 @@
 <template>
     <div class="notes-list-header">
-        <button class="btn" @click="$emit('delete-note')">Delete Note</button>
+        <button class="btn" @click="deleteNote">Delete Note</button>
     </div>
 </template>
 
 <script>
     export default {
-        name: 'DeleteNoteBtn'
+        name: 'DeleteNoteBtn',
+        methods: {
+            deleteNote() {
+                this.$emit('delete-note');
+            }
+        }
     }
 </script>
 
