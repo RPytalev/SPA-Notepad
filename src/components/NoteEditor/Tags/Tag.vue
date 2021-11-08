@@ -1,6 +1,6 @@
 <template>
-    <div class="tag" v-if="tagDisplayState">
-        <div @click="deleteTag">
+    <div class="tag">
+        <div v-if="tagDisplayState">
             {{ tag }}
         </div>
     </div>
@@ -12,11 +12,6 @@
         props: {
             tag: String,
             tagDisplayState: Boolean
-        },
-        methods: {
-            deleteTag() {
-                this.$emit('delete-tag', this.tag);
-            }
         }
     }
 </script>

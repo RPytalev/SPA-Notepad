@@ -1,12 +1,11 @@
 <template>
     <div class="notes-list-display">
         <DeleteNoteBtn @delete-note="deleteNote" />
-        <div class="notes-list" v-show="switchLists">
-            <NotesList :selectedNoteId="selectedNoteId" :notesList="notesList" @note-selected="noteSelected" @switch-reminder="switchReminder" />
-        </div>
-        <div class="notes-list-input-tag" v-show="!switchLists">
-            <NotesListInputTag
-            :notesListSelectedTag="notesListSelectedTag" />
+        <div class="notes-list">
+            <NotesList :selectedNoteId="selectedNoteId" 
+                       :notesList="notesList" 
+                       @note-selected="noteSelected" 
+                       @switch-reminder="switchReminder" />
         </div>
     </div>
 </template>
@@ -14,20 +13,16 @@
 <script>
 import DeleteNoteBtn from '../Header/DeleteNoteBtn.vue'
 import NotesList from './NotesList.vue'
-import NotesListInputTag from './NotesListInputTag.vue'
     export default {
         name: 'NotesListDisplay',
         components: {
             DeleteNoteBtn,
-            NotesList,
-            NotesListInputTag
+            NotesList
         },
         props: {
             notesList: Array,
             deleteNoteId: Number,
-            selectedNoteId: Number,
-            switchLists: Boolean,
-            notesListSelectedTag: Array
+            selectedNoteId: Number
         },
         methods: {
             switchReminder(id) {
@@ -44,7 +39,8 @@ import NotesListInputTag from './NotesListInputTag.vue'
 </script>
 
 <style lang="sass" scoped>
-.notes-list-display
+.notes-list-display,
+.found-notes-list-display
     width: 20rem
     height: 20rem
     margin: 1rem

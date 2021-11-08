@@ -6,7 +6,7 @@
             </div>
             <div class="search-area">
                 <SearchTagsArea 
-                @search-tag="searchTag" 
+                @change-search-tag="changeSearchTag" 
                 @tag-input="tagInput" />
             </div>
         </div>
@@ -14,20 +14,19 @@
             <div class="textarea" v-show="switchNoteEditorState">
                 <NoteEdit 
                 :note="note" 
-                @edit-note="editNote" 
+                @edit-note="editNote"
                 @toggle-component="toggleComponent" />
             </div>
             <div class="note-view" v-show="!switchNoteEditorState">
                 <NoteView 
-                :note="note" 
+                :note="note"
                 @switch-component="switchComponent" />
             </div>
         </div>
         <div class="tags-list">
             <TagsList 
             :note="note"
-            :tagDisplayState="tagDisplayState"
-            @delete-tag="deleteTag" />
+            :tagDisplayState="tagDisplayState" />
         </div>
     </div>
 </template>
@@ -51,7 +50,7 @@
         props: {
             note: Object,
             switchNoteEditorState: Boolean,
-            tagDisplayState: Boolean
+            tagDisplayState: Boolean,
         },
         methods: {
             createNote() {
@@ -60,14 +59,8 @@
             editNote(noteChange) {
                 this.$emit('edit-note', noteChange)
             },
-            tagInput(inputTag, event) {
-                this.$emit('tag-input', inputTag, event)
-            },
-            deleteTag(tag) {
-                this.$emit('delete-tag', tag);
-            },
-            searchTag() {
-                this.$emit('search-tag');
+            changeSearchTag(searchTag) {
+                this.$emit('change-search-tag', searchTag);
             },
             toggleComponent() {
                 this.$emit('toggle-component');

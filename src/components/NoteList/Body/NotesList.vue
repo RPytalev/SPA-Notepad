@@ -4,8 +4,8 @@
             <NotesListItem 
             :selectedNoteId="selectedNoteId" 
             :item="item" 
-            @note-selected="$emit('note-selected', item.id)" 
-            @switch-reminder="$emit('switch-reminder', item.id)" />
+            @note-selected="noteSelected" 
+            @switch-reminder="switchReminder" />
         </div>  
     </div>  
 </template>
@@ -17,11 +17,18 @@ import NotesListItem from './NotesListItem.vue'
         components: {
             NotesListItem
         },
+        methods: {
+            noteSelected(id) {
+                this.$emit('note-selected', id);
+            },
+            switchReminder(id) {
+                this.$emit('switch-reminder', id);
+            }
+        },
         props: {
             notesList: Array,
             selectedNoteId: Number
-        },
-        emits: ['note-selected', 'switch-reminder']
+        }
     }
 </script>
 

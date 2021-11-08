@@ -1,7 +1,11 @@
 <template>
-    <div :class="[item.reminder ? 'reminder' : '', 'note', item.id == selectedNoteId ? 'selected' : 'note']" @click="$emit('note-selected', item.id)" @dblclick="$emit('switch-reminder', item.id)">
+    <div :class="[this.item.reminder ? 'reminder' : '', 'note', 
+         this.item.id == selectedNoteId ? 'selected' : 'note']" 
+         @click="noteSelected" 
+         @dblclick="switchReminder">
+
         <h3>{{ title }}</h3>
-        <p>{{ item.date }}</p>
+        <p>{{ this.item.date }}</p>
     </div>
 </template>
 
@@ -11,6 +15,14 @@
         props: {
             item: Object,
             selectedNoteId: Number
+        },
+        methods: {
+            noteSelected() {
+                this.$emit('note-selected', this.item.id);
+            },
+            switchReminder() {
+                this.$emit('switch-reminder', this.item.id);
+            }
         },
         computed: {
             title: function () {

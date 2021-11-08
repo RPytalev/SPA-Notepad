@@ -4,26 +4,23 @@
     <div class="main">
       <div>
         <NotesListDisplay 
-        :selectedNoteId="selectedNoteId" 
-        :notesList="notesList" 
-        :notesListSelectedTag="notesListSelectedTag"
-        :switchLists="switchLists"
+        :selectedNoteId="this.selectedNoteId" 
+        :notesList="this.searchedNotes" 
         @note-selected="noteSelected" 
         @switch-reminder="switchReminder" 
         @delete-note="deleteNote" />
       </div>
       <div>
         <NoteEditorDisplay 
-        :switchNoteEditorState="switchNoteEditorState" 
-        :note="selectedNote" 
-        :tagDisplayState="tagDisplayState"
+        :switchNoteEditorState="this.switchNoteEditorState" 
+        :note="this.selectedNote" 
+        :tagDisplayState="this.tagDisplayState"
         @create-note="createNote" 
         @edit-note="editNote" 
-        @switch-component="switchComponent" 
+        @switch-component="switchComponent"
         @toggle-component="toggleComponent" 
-        @search-tag="searchTag"
-        @tag-input="tagInput"
-        @delete-tag="deleteTag" />
+        @change-search-tag="changeSearchTag"
+        @tag-input="tagInput" />
       </div>
     </div>
     <div class="footer"></div>
@@ -56,10 +53,7 @@
         let note = this.notesList.filter(( item ) => item.id === noteChange.id)[0];
         note.rawText = noteChange.rawText;
         note.date = noteChange.date;
-        let arr = note.rawText.match(/#[a-z A-Z 0-9]+/g);
-        this.tagsList.push(...arr);
-        this.tagsList = [...new Set(this.tagsList)];
-        note.tags.push(...arr);
+        note.tags = note.rawText.match(/#[a-zA-Z0-9]+/g);
         note.tags = [...new Set(note.tags)];
         if (this.switchLists === false) {
           this.switchLists = !this.switchLists;
@@ -84,6 +78,11 @@
       },
       noteSelected(id) {
         this.selectedNoteId = id;
+        // alert('Click is working ');
+      },
+      foundNoteSelected(id) {
+        this.foundNoteId = id;
+        // alert('Click is working ');
       },
       switchComponent() {
         this.switchNoteEditorState = !this.switchNoteEditorState;
@@ -91,35 +90,21 @@
       toggleComponent() {
         this.switchNoteEditorState = !this.switchNoteEditorState;
       },
-      searchTag() {
+      changeSearchTag(searchTag) {
+        this.searchTag = searchTag;
+        // if (this.allTags.includes(this.inputTag, 0)) {
 
-        if (this.tagsList.includes(this.inputTag, 0)) {
+        //   let arr = this.notesList.filter( ( item ) => item.tags.includes(this.inputTag, 0) );
+        //   this.notesListSelectedTag = this.notesListSelectedTag.concat(arr);
+        //   this.switchLists = !this.switchLists;
 
-          let arr = this.notesList.filter( ( item ) => String(item.tags) === this.inputTag );
-          console.log(arr);
-          this.notesListSelectedTag = this.notesListSelectedTag.concat(arr);
-          console.log(this.notesListSelectedTag);
-          this.switchLists = !this.switchLists;
-
-        } else {
-          let stateConfirm = confirm('There is no tag. Would you like save it?');
-          if (stateConfirm) {
-          this.tagsList.push(this.inputTag);
-          this.inputTag = '';
-        }
-        }
-        this.inputEvent.target.value = '';
-      },
-      tagInput(inputTag, event) {
-        this.inputTag = inputTag;
-        this.inputEvent = event;
-      },
-      deleteTag(tag) {
-        let stateConfirm = confirm('Are you sure?');
-        if (stateConfirm) {
-          this.tagsList = this.tagsList.filter((item) => String(item) !== tag);
-          this.tagDisplayState = !this.tagDisplayState;
-        }
+        // } else {
+        //   let stateConfirm = confirm('There is no tag. Would you like save it?');
+        //   if (stateConfirm) {
+        //   this.inputTag = '';
+        // }
+        // }
+        // this.inputEvent.target.value = '';
       }
     },
   data() {
@@ -127,40 +112,62 @@
       notesList: [
         {
           id: 1,
-          rawText: 'Test title 1\n test Text 1',
+          rawText: 'Test title 1\n test Text 1 #111',
           date: new Date(),
-          tags: [],
+          tags: [
+            '#111'
+          ],
           reminder: false
         },
         {
           id: 2,
-          rawText: 'Test title 2\n test Text 2',
+          rawText: 'Test title 2\n test Text 2 #222',
           date: new Date(),
-          tags: [],
+          tags: [
+            '#222'
+          ],
           reminder: false
         },
         {
           id: 3,
-          rawText: 'Test title 3\n test Text 3',
+          rawText: 'Test title 3\n test Text 3 #333',
           date: new Date(),
-          tags: [],
+          tags: [
+            '#333'
+          ],
           reminder: false
         }
       ],
-      tagsList: [],
+      searchTag: '',
       selectedNoteId: 0,
       switchNoteEditorState: false,
-      inputTag: '',
-      inputEvent: {},
-      notesListSelectedTag: [],
-      switchLists: true,
-      tagDisplayState: true
+      tagDisplayState: true,
     }
   },
   computed:
   {
-    selectedNote: function() {
+    selectedNote() {
       return this.notesList.filter(( item ) => item.id == this.selectedNoteId)[0];
+    },
+    selectedFoundNote() {
+      return this.notesList.filter(( item ) => item.id == this.foundNoteId)[0];
+    },
+    allTags()
+    {
+      let allTags = new Array();
+      for (let note of this.notesList)
+      {
+        for (let tag of note.tags)
+        {
+          allTags.push(tag);
+        }
+      }
+
+      return allTags;
+    },
+    searchedNotes()
+    {
+      return this.searchTag === '' ? this.notesList : this.notesList.filter(note => note.tags.includes(this.searchTag, 0) )
     }
   },
   created()
@@ -188,6 +195,12 @@ html
   background-color: $primary-background-color
   color: $primary-color
   text-align: center
+  
+  .highlight
+    font-family: Montserrat
+    font-size: .8rem
+    color: #ff5800
+    background-color: #000
 
   .header 
     width: 100%

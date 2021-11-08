@@ -1,26 +1,31 @@
 <template>
     <div class="search-area">
-        <TagInput @tag-input="tagInput" />
-        <SearchTagButton @click="searchTag" />
+        <SearchTagInput @tag-input="tagInput" />
+        <SearchTagButton @change-search-tag="changeSearchTag" />
     </div>
 </template>
 
 <script>
 import SearchTagButton from './SearchTagButton.vue'
-import TagInput from './TagInput.vue'
+import SearchTagInput from './SearchTagInput.vue'
 
     export default {
         name: 'SearchTagsArea',
+        data(){
+            return {
+                searchTag: ''
+            }
+        },
         components: {
             SearchTagButton,
-            TagInput
+            SearchTagInput
         },
         methods: {
-            tagInput(inputTag, event) {
-                this.$emit('tag-input', inputTag, event);
+            tagInput(searchTag) {
+                this.searchTag = searchTag;
             },
-            searchTag() {
-                this.$emit('search-tag');
+            changeSearchTag() {
+                this.$emit('change-search-tag', this.searchTag);
             }
         }
     }

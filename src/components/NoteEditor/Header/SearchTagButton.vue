@@ -1,6 +1,6 @@
 <template>
     <div class="search-tag-button">
-        <button @click="searchTag">Search</button>
+        <button @click="changeSearchTag">Search</button>
     </div>
 </template>
 
@@ -8,8 +8,8 @@
     export default {
         name: 'SearchTagButton',
         methods: {
-            searchTag() {
-                this.$emit('search-tag');
+            changeSearchTag() {
+                this.$emit('change-search-tag');
             }
         }
     }

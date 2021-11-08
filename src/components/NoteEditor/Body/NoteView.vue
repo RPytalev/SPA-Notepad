@@ -1,8 +1,8 @@
 <template>
     <div class="note" @click="switchComponent">
-        <p class="date">{{ note.date }}</p>
+        <p class="date">{{ this.note.date }}</p>
         <p class="title">{{ title }}</p>
-        <p class="text">{{ text }}</p>
+        <p v-html="text"></p>
     </div>
 </template>
 
@@ -18,7 +18,7 @@
             }
         },
         computed: {
-            title: function () {
+            title: function() {
                 let title = '';
                 let titleGroup = this.note.rawText.match(/(.*?)\n/);
                 if(titleGroup === undefined || titleGroup === null)
@@ -30,8 +30,12 @@
 
                 return title;
             },
-            text: function () {
+            text: function() {
                 let textWithoutTitle = this.note.rawText.replace(this.title, '');
+                this.note.tags.forEach(tag => {
+                    textWithoutTitle = textWithoutTitle.replaceAll(tag, '<span class=\'highlight\'>$&</span>');
+                });
+
                 return textWithoutTitle;
             }
         }
@@ -56,10 +60,11 @@
 
     p
         margin: 0
-        padding: 0 
+        padding: 0
     
     .date
         font-size: .5rem
+
 .tags
     display: flex
     width: 100%

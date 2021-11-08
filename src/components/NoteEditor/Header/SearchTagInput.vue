@@ -6,11 +6,11 @@
 
 <script>
     export default {
-        name: 'TagInput',
+        name: 'SearchTagInput',
         methods: {
             tagInput(event) {
-                let inputTag = event.target.value;
-                this.$emit('tag-input', inputTag, event);
+                let searchTag = event.target.value;
+                this.$emit('tag-input', searchTag);
             }
         }
     }
