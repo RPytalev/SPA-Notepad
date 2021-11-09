@@ -1,6 +1,6 @@
 <template>
-    <div class="tags-list">
-        <div class="tags" :key="item.id" v-for="item in note.tags">
+    <div class="tagslist">
+        <div :key="item.id" v-for="item in note.tags">
             <Tag 
             :tag="item" 
             :tagDisplayState="tagDisplayState" />
@@ -26,20 +26,7 @@ import Tag from './Tag.vue'
 </script>
 
 <style lang="sass" scoped>
-::-webkit-scrollbar
-  width: 0
-
-.tags-list
+.tagslist
     display: flex
-    flex-flow: row nowrap
-    width: 100%
-    height: 100%
-    overflow: auto
-
-    .tags
-        display: flex
-        flex-flow: row wrap
-        width: 100%
-        height: 100%
-        background-color: #ff5800
+    flex-flow: row wrap
 </style>

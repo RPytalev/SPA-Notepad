@@ -1,11 +1,12 @@
 <template>
     <div :class="[this.item.reminder ? 'reminder' : '', 'note', 
-         this.item.id == selectedNoteId ? 'selected' : 'note']" 
+         this.item.id == selectedNoteId ? 'selected' : '']" 
          @click="noteSelected" 
          @dblclick="switchReminder">
 
         <h3>{{ title }}</h3>
         <p>{{ this.item.date }}</p>
+        <hr size="1" color="#4a4545" />
     </div>
 </template>
 
@@ -42,20 +43,22 @@
 
 <style lang="sass" scoped>
 .note
-    display: flex
-    flex-flow: column
-    width: 10rem
-    height: 3rem
-    margin-bottom: .1rem
-    background-color: gray
+    width: 100%
+    height: 8rem
+    background-color: rgb(42, 39, 39)
     color: #fff
-    -webkit-user-select: none 
-    overflow: hidden
     cursor: pointer
 
+hr
+    position: relative
+    display: flex
+    justify-self: center
+    width: 90%
+
 .reminder
-    border-left: .3rem solid #ff7800
+    border-left: .3rem solid aqua
 
 .selected
-    background-color: #942
+    background-color: #ff7800
+    user-select: none
 </style>

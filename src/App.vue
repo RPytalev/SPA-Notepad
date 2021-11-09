@@ -1,8 +1,14 @@
 <template>
   <div class="container">
-    <div class="header"><h1>App</h1></div>
+    <div class="header">
+      <h1>Note</h1>
+      <div class="logo">
+        <img id="logo" alt="Image logo Pytalev - uppercase letter P" src="logo.png">
+      </div>
+      <h1>ad</h1>
+    </div>
     <div class="main">
-      <div>
+      <div class="notes-list-display">
         <NotesListDisplay 
         :selectedNoteId="this.selectedNoteId" 
         :notesList="this.searchedNotes" 
@@ -10,7 +16,7 @@
         @switch-reminder="switchReminder" 
         @delete-note="deleteNote" />
       </div>
-      <div>
+      <div class="note-editor-display">
         <NoteEditorDisplay 
         :switchNoteEditorState="this.switchNoteEditorState" 
         :note="this.selectedNote" 
@@ -19,11 +25,12 @@
         @edit-note="editNote" 
         @switch-component="switchComponent"
         @toggle-component="toggleComponent" 
-        @change-search-tag="changeSearchTag"
-        @tag-input="tagInput" />
+        @change-search-tag="changeSearchTag" />
       </div>
     </div>
-    <div class="footer"></div>
+    <div class="footer">
+      <div class="copyright"><p>&copy; Pytalev 2021</p></div>
+    </div>
   </div>
 </template>
 
@@ -56,7 +63,6 @@
         note.tags = note.rawText.match(/#[a-zA-Z0-9]+/g);
         note.tags = [...new Set(note.tags)];
         if (this.switchLists === false) {
-          this.switchLists = !this.switchLists;
           this.tagDisplayState = !this.tagDisplayState;
         }
         if (this.tagDisplayState === false) {
@@ -78,11 +84,6 @@
       },
       noteSelected(id) {
         this.selectedNoteId = id;
-        // alert('Click is working ');
-      },
-      foundNoteSelected(id) {
-        this.foundNoteId = id;
-        // alert('Click is working ');
       },
       switchComponent() {
         this.switchNoteEditorState = !this.switchNoteEditorState;
@@ -92,19 +93,6 @@
       },
       changeSearchTag(searchTag) {
         this.searchTag = searchTag;
-        // if (this.allTags.includes(this.inputTag, 0)) {
-
-        //   let arr = this.notesList.filter( ( item ) => item.tags.includes(this.inputTag, 0) );
-        //   this.notesListSelectedTag = this.notesListSelectedTag.concat(arr);
-        //   this.switchLists = !this.switchLists;
-
-        // } else {
-        //   let stateConfirm = confirm('There is no tag. Would you like save it?');
-        //   if (stateConfirm) {
-        //   this.inputTag = '';
-        // }
-        // }
-        // this.inputEvent.target.value = '';
       }
     },
   data() {
@@ -149,9 +137,6 @@
     selectedNote() {
       return this.notesList.filter(( item ) => item.id == this.selectedNoteId)[0];
     },
-    selectedFoundNote() {
-      return this.notesList.filter(( item ) => item.id == this.foundNoteId)[0];
-    },
     allTags()
     {
       let allTags = new Array();
@@ -179,46 +164,99 @@
 
 <style lang="sass">
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap')
-$primary-color: #ff5800
-$primary-background-color: rgba(0,0,0, .9)
 
 html 
+  box-sizing: border-box
   margin: 0
   padding: 0
+  font-size: 62.5%
+  font-family: 'Montserrat', sans-serif
+
+  h1
+    font-size: 4rem
+    font-weight: 900
+  
+  h2
+    font-size: 2.4rem
+    font-weight: 700
+  
+  h3
+    font-size: 2rem
+    font-weight: 400
+  
+  p
+    font-size: 1rem
+    font-weight: 300
+
+*,
+*::before,
+*::after
+  box-sizing: inherit
 
 .container
-  box-sizing: border-box
-  width: 1200px
-  height: 80vh
-  margin: 0 auto
-  padding: 0
-  background-color: $primary-background-color
-  color: $primary-color
-  text-align: center
-  
+  max-width: 1200px
+  height: 100vh
+  margin: 0px auto
+  padding: 0px 15px
+  background-color: #000
+
   .highlight
-    font-family: Montserrat
-    font-size: .8rem
-    color: #ff5800
-    background-color: #000
+    font-size: 1.4rem
+    font-weight: 300
+    color: #fff
+    background-color: #ff7800
 
   .header 
+    display: flex
     width: 100%
-    height: 4rem
-    background-color: green
-    color: #fff
+    height: 10vh
+    justify-content: center
+    color: #ff7800
+    text-align: center
+    padding: 1rem
+
+    .logo
+      display: flex
+      justify-content: center
+      align-items: center
+      width: 4rem
+      height: 4rem
+
+      img
+        width: 4rem
+        height: 4rem
+        object-fit: contain
   
   .main
     display: flex
-    justify-content: space-around
     width: 100%
-    height: 60vh
-    background-color: #000
-    color: #000
+    height: 80vh
+    background-color: #e9e9e9
+
+    .notes-list-display
+      display: flex
+      flex-flow: column
+      align-items: flex-start
+      flex-basis: 30%
+      background-color: rgb(42, 39, 39)
+      color: lightgrey
+      border-right: .1rem solid #000
+      overflow-y: scroll
+    
+    .note-editor-display
+      display: flex
+      flex-flow: column
+      flex-basis: 70%
 
   .footer
+    display: flex
+    justify-content: center
+    align-items: center
     width: 100%
-    height: 4rem
-    background-color: green
-    color: #fff
+    height: 10vh
+
+    .copyright
+        color: #ff7800
+        text-align: center
+        padding: 1rem
 </style>

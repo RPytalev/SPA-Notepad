@@ -39,9 +39,6 @@ import NotesListItem from './NotesListItem.vue'
 .notes-list
     display: flex
     flex-flow: column
-    width: 10rem
-    height: 10rem
-    background-color: #000
-    color: magenta
-    overflow-y: scroll
+    width: 100%
+    padding-left: 1rem
 </style>

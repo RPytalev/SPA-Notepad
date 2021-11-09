@@ -1,6 +1,6 @@
 <template>
-    <div class="search-tag-button">
-        <button @click="changeSearchTag">Search</button>
+    <div role="button" id="search-tag-btn" class="btn" @click="changeSearchTag">
+        <img alt="Magnifier icon image" src="../../../assets/button-search-gray.svg">
     </div>
 </template>
 
@@ -16,8 +16,22 @@
 </script>
 
 <style lang="sass" scoped>
-button
+.btn
     display: flex
-    width: 4rem
-    height: 1.4rem
+    justify-content: center
+    align-items: center
+    width: 2rem
+    height: 2rem
+    border: .1rem solid rgb(42, 39, 39)
+    border-radius: 50%
+    margin: 0 1rem
+    cursor: pointer
+
+    img
+        width: 2rem
+        height: 2rem
+        object-fit: contain
+    
+.btn:hover
+    border: .1rem solid lightgray
 </style>

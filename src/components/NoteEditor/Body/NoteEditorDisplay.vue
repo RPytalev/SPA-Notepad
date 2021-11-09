@@ -1,17 +1,16 @@
 <template>
-    <div class="note-editor-display">
-        <div class="header">
+    <div class="editor-display">
+        <div class="note-editor-header">
             <div class="button">
                 <CreateNoteBtn @create-note="createNote" />
             </div>
             <div class="search-area">
                 <SearchTagsArea 
-                @change-search-tag="changeSearchTag" 
-                @tag-input="tagInput" />
+                @change-search-tag="changeSearchTag" />
             </div>
         </div>
         <div class="display">
-            <div class="textarea" v-show="switchNoteEditorState">
+            <div class="note-edit" v-show="switchNoteEditorState">
                 <NoteEdit 
                 :note="note" 
                 @edit-note="editNote"
@@ -73,44 +72,53 @@
 </script>
 
 <style lang="sass" scoped>
-.note-editor-display 
+.editor-display
     display: flex
     flex-flow: column
-    width: 20rem
-    height: 20rem
-    margin: 1rem
+    flex: 100%
 
-    .header
+    ::-webkit-scrollbar
+        width: 0px
+        background: transparent
+
+    .note-editor-header
+        display: flex
+        justify-content: space-between
+        align-items: center
+        width: 100%
+        height: 4vh
+        padding: 1rem 0
+        background-color: rgb(42, 39, 39)
+        border-bottom: .1rem solid #000
+
+    .display
+        position: relative
         display: flex
         width: 100%
-        height: 4rem
-        background-color: #ff5800
-    
-    .display 
-        display: flex
-        position: relative
-        width: 20rem
-        height: 20rem
+        flex: 95%
+        background-color: rgb(42, 39, 39)
 
-        .textarea
-            display: flex
+        .note-edit
             position: absolute
+            display: flex
+            left: 0
+            top: 0
             width: 100%
             height: 100%
-            top: 0
-            left: 0
-            
+
         .note-view
-            display: flex
             position: absolute
+            display: flex
+            left: 0
+            top: 0
             width: 100%
             height: 100%
-            top: 0
-            left: 0
 
     .tags-list
         display: flex
+        align-items: center
         width: 100%
-        height: 4rem
-        background-color: #ff5800
+        flex: 5%
+        background-color: rgb(42, 39, 39)
+        border-top: .1rem solid #000
 </style>

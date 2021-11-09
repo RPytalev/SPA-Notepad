@@ -1,5 +1,5 @@
 <template>
-    <div class="note" @click="switchComponent">
+    <div class="note-display" @click="switchComponent">
         <p class="date">{{ this.note.date }}</p>
         <p class="title">{{ title }}</p>
         <p v-html="text"></p>
@@ -43,32 +43,27 @@
 </script>
 
 <style lang="sass" scoped>
-.note
+.note-display
     display: flex
     flex-flow: column
     width: 100%
-    height: 100%
+    background-color: rgb(42, 39, 39)
     margin: 0
     padding: 0
-    background-color: #547
     color: #fff
     text-align: left
     font-family: Montserrat
-    font-size: .8rem
+    font-size: 2rem
     overflow-x: hidden
     overflow-y: auto
 
     p
         margin: 0
-        padding: 0
-    
-    .date
-        font-size: .5rem
+        padding: 0 1rem
+        font-size: 1.4rem
+        font-weight: 300
 
-.tags
-    display: flex
-    width: 100%
-    height: 2rem
-    background-color: #777
-    
+    .date
+        font-size: 1rem
+        background-color: rgb(42, 39, 39)
 </style>

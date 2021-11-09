@@ -13,7 +13,8 @@ import SearchTagInput from './SearchTagInput.vue'
         name: 'SearchTagsArea',
         data(){
             return {
-                searchTag: ''
+                searchTag: '',
+                event: {}
             }
         },
         components: {
@@ -21,11 +22,13 @@ import SearchTagInput from './SearchTagInput.vue'
             SearchTagInput
         },
         methods: {
-            tagInput(searchTag) {
+            tagInput(searchTag, event) {
                 this.searchTag = searchTag;
+                this.event = event;
             },
             changeSearchTag() {
                 this.$emit('change-search-tag', this.searchTag);
+                this.event.target.value = '';
             }
         }
     }
@@ -34,7 +37,6 @@ import SearchTagInput from './SearchTagInput.vue'
 <style lang="sass" scoped>
 .search-area
     display: flex
-    width: 14rem
-    height: 2rem
-    background-color: red
+    justify-content: center
+    align-items: center
 </style>

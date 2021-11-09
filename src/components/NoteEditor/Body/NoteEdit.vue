@@ -1,9 +1,10 @@
 <template>
-    <div class="note-edit" v-on:mouseleave="toggleComponent">
-        <div class="date">{{ this.note.date }}</div>
+    <div class="note-editor" v-on:mouseleave="toggleComponent">
+        <p class="date">{{ this.note.date }}</p>
         <textarea id="textarea" name="textarea" 
         :value="this.note.rawText" 
-        @change="editNote"></textarea>
+        @change="editNote">
+        </textarea>
     </div>
 </template>
 
@@ -33,27 +34,38 @@
 </script>
 
 <style lang="sass" scoped>
-.note-edit
+.note-editor
+    display: flex
+    flex-flow: column
     width: 100%
-    height: 100%
+    background-color: rgb(42, 39, 39)
+    margin: 0
+    padding: 0
+    color: #fff
+    text-align: left
+
+    p
+        margin: 0
+        padding: 0 1rem
 
     .date
-        background-color: #222
+        font-size: 1rem
         color: #fff
-        font-size: .5rem
-        text-align: left
 
     textarea
-        margin: 0
-        padding: 0
+        outline: none
+        border: none
+        resize: none
         width: 100%
         height: 100%
-        border: none
-        background-color: #222
+        background-color: rgb(42, 39, 39)
+        caret-color: #ff7800
         color: #fff
         font-family: Montserrat
-        font-size: .8rem
-        resize: none
-        outline: none
+        font-size: 1.4rem
+        font-weight: 300
         overflow: auto
+        text-align: left
+        padding: 0 1rem
+        margin: 0
 </style>

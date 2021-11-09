@@ -1,6 +1,6 @@
 <template>
-    <div class="notes-list-header">
-        <button class="btn" @click="deleteNote">Delete Note</button>
+    <div role="button" id="delete-note-btn" class="btn" @click="deleteNote">
+        <img alt="Trash basket icon image" src="../../../assets/button-delete-gray.svg">
     </div>
 </template>
 
@@ -16,17 +16,22 @@
 </script>
 
 <style lang="sass" scoped>
-.notes-list-header
+.btn
     display: flex
-    justify-content: flex-end
+    justify-content: center
     align-items: center
-    width: 100%
-    height: 4rem
-    background-color: orange
+    width: 2rem
+    height: 2rem
+    margin: 0 1rem
+    border: .1rem solid rgb(42, 39, 39)
+    border-radius: 50%
+    cursor: pointer
 
-    .btn
-        width: 10rem
+    img
+        width: 2rem
         height: 2rem
-        background-color: red
-        color: #fff
+        object-fit: contain
+
+.btn:hover
+    border: .1rem solid lightgray
 </style>

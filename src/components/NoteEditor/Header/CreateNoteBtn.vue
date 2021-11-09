@@ -1,7 +1,8 @@
 <template>
-    <div class="btn">
-        <button @click="createNote">New Note</button>
+    <div role="button" id="create-note-btn" class="btn" @click="createNote">
+        <img alt="Paper sheet and pen icon image" src="../../../assets/button-create-gray.svg">
     </div>
+
 </template>
 
 <script>
@@ -16,17 +17,22 @@
 </script>
 
 <style lang="sass" scoped>
-.btn 
+.btn
     display: flex
-    justify-content: flex-start
+    justify-content: center
     align-items: center
-    width: 100%
+    width: 2rem
     height: 2rem
-    background-color: orange
+    margin: 0 1rem
+    border: .1rem solid rgb(42, 39, 39)
+    border-radius: 50%
+    cursor: pointer
 
-    button
-        width: 5rem
+    img
+        width: 2rem
         height: 2rem
-        margin: 0 .2rem
-        background-color: green
+        object-fit: contain
+
+.btn:hover
+    border: .1rem solid lightgray
 </style>
