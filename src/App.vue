@@ -62,12 +62,10 @@
         note.date = noteChange.date;
         note.tags = note.rawText.match(/#[a-zA-Z0-9]+/g);
         note.tags = [...new Set(note.tags)];
-        if (this.switchLists === false) {
-          this.tagDisplayState = !this.tagDisplayState;
-        }
         if (this.tagDisplayState === false) {
           this.tagDisplayState = !this.tagDisplayState;
         }
+        this.searchTag = '';
       },
       searchNote(searchTag) {
         this.searchTag = searchTag;
@@ -132,8 +130,7 @@
       tagDisplayState: true,
     }
   },
-  computed:
-  {
+  computed: {
     selectedNote() {
       return this.notesList.filter(( item ) => item.id == this.selectedNoteId)[0];
     },
