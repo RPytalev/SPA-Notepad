@@ -3,7 +3,7 @@
         <div class="notes-list-header">
             <DeleteNoteBtn @btn-click-delete="deleteNote" />
         </div>
-        <div class="notes-list">
+        <div class="notes-list-body">
             <NotesList :selectedNoteId="selectedNoteId" 
                        :notesList="notesList" 
                        @click-select-note="sendSelectedNoteId" 
@@ -44,7 +44,7 @@ import NotesList from './NotesList.vue'
 .list-display
     display: flex
     flex-flow: column
-    flex: 100%
+    width: 100%
 
     ::-webkit-scrollbar
         width: 0px
@@ -60,7 +60,8 @@ import NotesList from './NotesList.vue'
         background-color: rgb(42, 39, 39)
         border-bottom: .1rem solid #000
 
-    .notes-list
+    .notes-list-body
+        display: flex
         width: 100%
         overflow-x: hidden
         overflow-y: scroll

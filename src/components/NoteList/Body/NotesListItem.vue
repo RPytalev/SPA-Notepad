@@ -43,8 +43,12 @@
 
 <style lang="sass" scoped>
 .note
+    display: flex
+    flex-flow: column
+    margin: 0
+    padding: 0
     width: 100%
-    height: 8rem
+    height: 10rem
     background-color: rgb(42, 39, 39)
     color: #fff
     cursor: pointer

@@ -91,39 +91,16 @@
       },
       toggleNoteEditor() {
         this.switchNoteEditorState = !this.switchNoteEditorState;
+      },
+      async fetchNotesList() {
+        const res = await fetch('http://localhost:5000/notesList');
+        const data = await res.json();
+        return data
       }
     },
   data() {
     return {
-      notesList: [
-        {
-          id: 1,
-          rawText: 'Test title 1\n test Text 1 #111',
-          date: new Date(),
-          tags: [
-            '#111'
-          ],
-          reminder: false
-        },
-        {
-          id: 2,
-          rawText: 'Test title 2\n test Text 2 #222',
-          date: new Date(),
-          tags: [
-            '#222'
-          ],
-          reminder: false
-        },
-        {
-          id: 3,
-          rawText: 'Test title 3\n test Text 3 #333',
-          date: new Date(),
-          tags: [
-            '#333'
-          ],
-          reminder: false
-        }
-      ],
+      notesList: [],
       searchTag: '',
       selectedNoteId: 0,
       switchNoteEditorState: false,
@@ -152,8 +129,36 @@
       return this.searchTag === '' ? this.notesList : this.notesList.filter(note => note.tags.includes(this.searchTag, 0) )
     }
   },
-  created()
-  {
+  created() {
+    this.notesList = [
+        {
+          "id": 1,
+          "title": "",
+          "rawText": "Test title 1\n test Text 1 #111",
+          "tags": [
+            "#111"
+          ],
+          "reminder": false
+        },
+        {
+            "id": 2,
+            "title": "",
+            "rawText": "Test title 2\n test Text 2 #222",
+            "tags": [
+              "#222"
+            ],
+            "reminder": false
+        },
+        {
+            "id": 3,
+            "title": "",
+            "rawText": "Test title 3\n test Text 3 #333",
+            "tags": [
+              "#333"
+            ],
+            "reminder": false
+        }
+      ],
     this.selectedNoteId = this.notesList[0].id;
   }
 }

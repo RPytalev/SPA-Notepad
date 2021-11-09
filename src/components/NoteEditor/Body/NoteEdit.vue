@@ -17,9 +17,10 @@
                 let rawText = event.target.value;
                 
                 const noteChange = {
+                    date: new Date(),
                     id: this.note.id,
+                    title: this.note.title,
                     rawText: rawText,
-                    date: new Date()
                 }
                 this.$emit('textarea-change-edit', noteChange);
             },
