@@ -10,7 +10,7 @@
         name: 'CreateNoteBtn',
         methods: {
             createNote() {
-                this.$emit('create-note');
+                this.$emit('btn-click-create');
             }
         }
     }

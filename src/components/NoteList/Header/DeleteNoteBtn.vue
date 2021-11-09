@@ -9,7 +9,7 @@
         name: 'DeleteNoteBtn',
         methods: {
             deleteNote() {
-                this.$emit('delete-note');
+                this.$emit('btn-click-delete');
             }
         }
     }

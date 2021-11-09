@@ -3,7 +3,7 @@
     <div class="header">
       <h1>Note</h1>
       <div class="logo">
-        <img id="logo" alt="Image logo Pytalev - uppercase letter P" src="logo.png">
+        <img id="logo" alt="Image logo Pytalev - uppercase letter P" src="assets/logo-orange.svg">
       </div>
       <h1>ad</h1>
     </div>
@@ -12,20 +12,20 @@
         <NotesListDisplay 
         :selectedNoteId="this.selectedNoteId" 
         :notesList="this.searchedNotes" 
-        @note-selected="noteSelected" 
-        @switch-reminder="switchReminder" 
-        @delete-note="deleteNote" />
+        @click-select-note="sendSelectedNoteId" 
+        @dblclick-switch-reminder="switchReminder" 
+        @btn-click-delete="deleteNote" />
       </div>
       <div class="note-editor-display">
         <NoteEditorDisplay 
         :switchNoteEditorState="this.switchNoteEditorState" 
         :note="this.selectedNote" 
         :tagDisplayState="this.tagDisplayState"
-        @create-note="createNote" 
-        @edit-note="editNote" 
-        @switch-component="switchComponent"
-        @toggle-component="toggleComponent" 
-        @change-search-tag="changeSearchTag" />
+        @btn-click-create="createNote" 
+        @textarea-change-edit="editNote" 
+        @btn-click-toggle-display="toggleNoteDisplay"
+        @mouseleave-note-editor="toggleNoteEditor"
+        @btn-click-search="searchNote" />
       </div>
     </div>
     <div class="footer">
@@ -69,8 +69,8 @@
           this.tagDisplayState = !this.tagDisplayState;
         }
       },
-      switchReminder(id) {
-        this.notesList = this.notesList.map((item) => item.id == id ? {...item, reminder: !item.reminder} : item)
+      searchNote(searchTag) {
+        this.searchTag = searchTag;
       },
       deleteNote() {
             this.notesList = this.notesList.filter(( item ) => item.id !== this.selectedNoteId);
@@ -82,17 +82,17 @@
               this.selectedNoteId = this.notesList[0].id;
             }
       },
-      noteSelected(id) {
+      sendSelectedNoteId(id) {
         this.selectedNoteId = id;
       },
-      switchComponent() {
+      switchReminder(id) {
+        this.notesList = this.notesList.map((item) => item.id == id ? {...item, reminder: !item.reminder} : item)
+      },
+      toggleNoteDisplay() {
         this.switchNoteEditorState = !this.switchNoteEditorState;
       },
-      toggleComponent() {
+      toggleNoteEditor() {
         this.switchNoteEditorState = !this.switchNoteEditorState;
-      },
-      changeSearchTag(searchTag) {
-        this.searchTag = searchTag;
       }
     },
   data() {

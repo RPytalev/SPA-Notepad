@@ -1,16 +1,16 @@
 <template>
     <div>
-        <input id="search-tag-input" type="text" v-on:mouseleave="tagInput">
+        <input id="search-tag-input" type="text" v-on:mouseleave="sendInputTag">
     </div>
 </template>
 
 <script>
     export default {
-        name: 'SearchTagInput',
+        name: 'SearchInputTag',
         methods: {
-            tagInput(event) {
+            sendInputTag(event) {
                 let searchTag = event.target.value;
-                this.$emit('tag-input', searchTag, event);
+                this.$emit('mouseleave-input-tag', searchTag, event);
             }
         }
     }

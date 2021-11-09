@@ -1,5 +1,5 @@
 <template>
-    <div class="note-editor" v-on:mouseleave="toggleComponent">
+    <div class="note-editor" v-on:mouseleave="toggleNoteEditor">
         <p class="date">{{ this.note.date }}</p>
         <textarea id="textarea" name="textarea" 
         :value="this.note.rawText" 
@@ -21,10 +21,10 @@
                     rawText: rawText,
                     date: new Date()
                 }
-                this.$emit('edit-note', noteChange);
+                this.$emit('textarea-change-edit', noteChange);
             },
-            toggleComponent() {
-                this.$emit('toggle-component');
+            toggleNoteEditor() {
+                this.$emit('mouseleave-note-editor');
             }
         },
         props: {

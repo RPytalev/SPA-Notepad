@@ -1,13 +1,13 @@
 <template>
     <div class="search-area">
-        <SearchTagInput @tag-input="tagInput" />
-        <SearchTagButton @change-search-tag="changeSearchTag" />
+        <SearchInputTag @mouseleave-input-tag="sendInputTag" />
+        <SearchNoteBtn @btn-click-search="searchNote" />
     </div>
 </template>
 
 <script>
-import SearchTagButton from './SearchTagButton.vue'
-import SearchTagInput from './SearchTagInput.vue'
+import SearchNoteBtn from './SearchNoteBtn.vue'
+import SearchInputTag from './SearchInputTag.vue'
 
     export default {
         name: 'SearchTagsArea',
@@ -18,16 +18,16 @@ import SearchTagInput from './SearchTagInput.vue'
             }
         },
         components: {
-            SearchTagButton,
-            SearchTagInput
+            SearchNoteBtn,
+            SearchInputTag
         },
         methods: {
-            tagInput(searchTag, event) {
+            sendInputTag(searchTag, event) {
                 this.searchTag = searchTag;
                 this.event = event;
             },
-            changeSearchTag() {
-                this.$emit('change-search-tag', this.searchTag);
+            searchNote() {
+                this.$emit('btn-click-search', this.searchTag);
                 this.event.target.value = '';
             }
         }

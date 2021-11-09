@@ -1,5 +1,5 @@
 <template>
-    <div class="note-display" @click="switchComponent">
+    <div class="note-display" @click="toggleNoteDisplay">
         <p class="date">{{ this.note.date }}</p>
         <p class="title">{{ title }}</p>
         <p v-html="text"></p>
@@ -13,8 +13,8 @@
             note: Object
         },
         methods: {
-            switchComponent() {
-                this.$emit('switch-component');
+            toggleNoteDisplay() {
+                this.$emit('btn-click-toggle-display');
             }
         },
         computed: {

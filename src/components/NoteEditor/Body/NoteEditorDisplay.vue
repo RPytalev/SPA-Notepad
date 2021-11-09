@@ -2,24 +2,24 @@
     <div class="editor-display">
         <div class="note-editor-header">
             <div class="button">
-                <CreateNoteBtn @create-note="createNote" />
+                <CreateNoteBtn @btn-click-create="createNote" />
             </div>
             <div class="search-area">
                 <SearchTagsArea 
-                @change-search-tag="changeSearchTag" />
+                @btn-click-search="searchNote" />
             </div>
         </div>
         <div class="display">
             <div class="note-edit" v-show="switchNoteEditorState">
                 <NoteEdit 
                 :note="note" 
-                @edit-note="editNote"
-                @toggle-component="toggleComponent" />
+                @textarea-change-edit="editNote"
+                @mouseleave-note-editor="toggleNoteEditor" />
             </div>
             <div class="note-view" v-show="!switchNoteEditorState">
                 <NoteView 
                 :note="note"
-                @switch-component="switchComponent" />
+                @btn-click-toggle-display="toggleNoteDisplay" />
             </div>
         </div>
         <div class="tags-list">
@@ -53,19 +53,19 @@
         },
         methods: {
             createNote() {
-                this.$emit('create-note');
+                this.$emit('btn-click-create');
             },
             editNote(noteChange) {
-                this.$emit('edit-note', noteChange)
+                this.$emit('textarea-change-edit', noteChange)
             },
-            changeSearchTag(searchTag) {
-                this.$emit('change-search-tag', searchTag);
+            searchNote(searchTag) {
+                this.$emit('btn-click-search', searchTag);
             },
-            toggleComponent() {
-                this.$emit('toggle-component');
+            toggleNoteEditor() {
+                this.$emit('mouseleave-note-editor');
             },
-            switchComponent() {
-                this.$emit('switch-component');
+            toggleNoteDisplay() {
+                this.$emit('btn-click-toggle-display');
             }
         }
     }

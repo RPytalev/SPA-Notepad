@@ -1,7 +1,7 @@
 <template>
     <div :class="[this.item.reminder ? 'reminder' : '', 'note', 
          this.item.id == selectedNoteId ? 'selected' : '']" 
-         @click="noteSelected" 
+         @click="sendSelectedNoteId" 
          @dblclick="switchReminder">
 
         <h3>{{ title }}</h3>
@@ -18,11 +18,11 @@
             selectedNoteId: Number
         },
         methods: {
-            noteSelected() {
-                this.$emit('note-selected', this.item.id);
+            sendSelectedNoteId() {
+                this.$emit('click-select-note', this.item.id);
             },
             switchReminder() {
-                this.$emit('switch-reminder', this.item.id);
+                this.$emit('dblclick-switch-reminder', this.item.id);
             }
         },
         computed: {

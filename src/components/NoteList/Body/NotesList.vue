@@ -4,8 +4,8 @@
             <NotesListItem 
             :selectedNoteId="selectedNoteId" 
             :item="item" 
-            @note-selected="noteSelected" 
-            @switch-reminder="switchReminder" />
+            @click-select-note="sendSelectedNoteId" 
+            @dblclick-switch-reminder="switchReminder" />
         </div>  
     </div>  
 </template>
@@ -18,11 +18,11 @@ import NotesListItem from './NotesListItem.vue'
             NotesListItem
         },
         methods: {
-            noteSelected(id) {
-                this.$emit('note-selected', id);
+            sendSelectedNoteId(id) {
+                this.$emit('click-select-note', id);
             },
             switchReminder(id) {
-                this.$emit('switch-reminder', id);
+                this.$emit('dblclick-switch-reminder', id);
             }
         },
         props: {

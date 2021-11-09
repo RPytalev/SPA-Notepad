@@ -1,5 +1,5 @@
 <template>
-    <div role="button" id="search-tag-btn" class="btn" @click="changeSearchTag">
+    <div role="button" id="search-tag-btn" class="btn" @click="searchNote">
         <img alt="Magnifier icon image" src="../../../assets/button-search-gray.svg">
     </div>
 </template>
@@ -8,8 +8,8 @@
     export default {
         name: 'SearchTagButton',
         methods: {
-            changeSearchTag() {
-                this.$emit('change-search-tag');
+            searchNote() {
+                this.$emit('btn-click-search');
             }
         }
     }
