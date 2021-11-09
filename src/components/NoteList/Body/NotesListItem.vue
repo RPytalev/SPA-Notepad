@@ -4,7 +4,7 @@
          @click="sendSelectedNoteId" 
          @dblclick="switchReminder">
 
-        <h3>{{ title }}</h3>
+        <h2>{{ title }}</h2>
         <p>{{ this.item.date }}</p>
         <hr size="1" color="#4a4545" />
     </div>

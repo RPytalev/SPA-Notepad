@@ -1,7 +1,7 @@
 <template>
     <div class="note-display" @click="toggleNoteDisplay">
         <p class="date">{{ this.note.date }}</p>
-        <p class="title">{{ title }}</p>
+        <h3 class="title">{{ title }}</h3>
         <p v-html="text"></p>
     </div>
 </template>

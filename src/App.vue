@@ -1,35 +1,35 @@
 <template>
-  <div class="container">
-    <div class="header">
-      <h1>Note</h1>
-      <div class="logo">
-        <img id="logo" alt="Image logo Pytalev - uppercase letter P" src="assets/logo-orange.svg">
+  <div class="app-container">
+    <div class="component-container">
+      <div class="header">
+        <div class="startTitle">Note</div>
+        <div class="logo"></div>
+        <div class="finishTitle">ad</div>
       </div>
-      <h1>ad</h1>
-    </div>
-    <div class="main">
-      <div class="notes-list-display">
-        <NotesListDisplay 
-        :selectedNoteId="this.selectedNoteId" 
-        :notesList="this.searchedNotes" 
-        @click-select-note="sendSelectedNoteId" 
-        @dblclick-switch-reminder="switchReminder" 
-        @btn-click-delete="deleteNote" />
+      <div class="main">
+        <div class="notes-list-display">
+          <NotesListDisplay 
+          :selectedNoteId="this.selectedNoteId" 
+          :notesList="this.searchedNotes" 
+          @click-select-note="sendSelectedNoteId" 
+          @dblclick-switch-reminder="switchReminder" 
+          @btn-click-delete="deleteNote" />
+        </div>
+        <div class="note-editor-display">
+          <NoteEditorDisplay 
+          :switchNoteEditorState="this.switchNoteEditorState" 
+          :note="this.selectedNote" 
+          :tagDisplayState="this.tagDisplayState"
+          @btn-click-create="createNote" 
+          @textarea-change-edit="editNote" 
+          @btn-click-toggle-display="toggleNoteDisplay"
+          @mouseleave-note-editor="toggleNoteEditor"
+          @btn-click-search="searchNote" />
+        </div>
       </div>
-      <div class="note-editor-display">
-        <NoteEditorDisplay 
-        :switchNoteEditorState="this.switchNoteEditorState" 
-        :note="this.selectedNote" 
-        :tagDisplayState="this.tagDisplayState"
-        @btn-click-create="createNote" 
-        @textarea-change-edit="editNote" 
-        @btn-click-toggle-display="toggleNoteDisplay"
-        @mouseleave-note-editor="toggleNoteEditor"
-        @btn-click-search="searchNote" />
+      <div class="footer">
+        <div class="copyright"><p>&copy; Pytalev 2021</p></div>
       </div>
-    </div>
-    <div class="footer">
-      <div class="copyright"><p>&copy; Pytalev 2021</p></div>
     </div>
   </div>
 </template>
@@ -169,91 +169,99 @@ html
   font-size: 62.5%
   font-family: 'Montserrat', sans-serif
 
-  h1
-    font-size: 4rem
-    font-weight: 900
-  
-  h2
-    font-size: 2.4rem
-    font-weight: 700
-  
-  h3
-    font-size: 2rem
-    font-weight: 400
-  
-  p
-    font-size: 1rem
-    font-weight: 300
-
 *,
 *::before,
 *::after
-  box-sizing: inherit
+  box-sizing: border-box
 
-.container
+.app-container
   max-width: 1200px
   height: 100vh
   margin: 0px auto
   padding: 0px 15px
   background-color: #000
 
-  .highlight
-    font-size: 1.4rem
-    font-weight: 300
-    color: #fff
-    background-color: #ff7800
-
-  .header 
+  .component-container
     display: flex
+    flex-flow: column nowrap
     width: 100%
-    height: 10vh
-    justify-content: center
-    color: #ff7800
-    text-align: center
-    padding: 1rem
+    height: 100%
 
-    .logo
+    .highlight
+      font-size: 1.4rem
+      font-weight: 300
+      color: #fff
+      background-color: #ff7800
+
+    .header 
+      display: flex
+      flex-flow: row nowrap
+      width: 100%
+      flex: 10%
+      justify-content: center
+      align-items: center
+      color: #ff7800
+      padding: 1rem
+
+      .startTitle
+        display: flex
+        justify-self: center
+        align-self: center
+        width: auto
+        height: 4rem
+        font-size: 4rem
+        font-weight: 900
+
+      .logo
+        display: flex
+        justify-self: center
+        align-self: center
+        width: 4rem
+        height: 4rem
+        background-image: url(assets/logo-orange.svg)
+        background-repeat: no-repeat
+        background-size: contain
+
+      .finishTitle
+        display: flex
+        justify-self: center
+        align-self: center
+        width: auto
+        height: 4rem
+        margin-left: -1.2rem
+        font-size: 4rem
+        font-weight: 900
+
+    .main
+      display: flex
+      width: 100%
+      flex: 80%
+      background-color: #e9e9e9
+
+      .notes-list-display
+        display: flex
+        flex-flow: column
+        align-items: flex-start
+        flex-basis: 30%
+        background-color: rgb(42, 39, 39)
+        color: lightgrey
+        border-right: .1rem solid #000
+        overflow-y: scroll
+
+      .note-editor-display
+        display: flex
+        flex-flow: column
+        flex-basis: 70%
+
+    .footer
       display: flex
       justify-content: center
       align-items: center
-      width: 4rem
-      height: 4rem
+      width: 100%
+      flex: 10%
 
-      img
-        width: 4rem
-        height: 4rem
-        object-fit: contain
-  
-  .main
-    display: flex
-    width: 100%
-    height: 80vh
-    background-color: #e9e9e9
-
-    .notes-list-display
-      display: flex
-      flex-flow: column
-      align-items: flex-start
-      flex-basis: 30%
-      background-color: rgb(42, 39, 39)
-      color: lightgrey
-      border-right: .1rem solid #000
-      overflow-y: scroll
-    
-    .note-editor-display
-      display: flex
-      flex-flow: column
-      flex-basis: 70%
-
-  .footer
-    display: flex
-    justify-content: center
-    align-items: center
-    width: 100%
-    height: 10vh
-
-    .copyright
-        color: #ff7800
-        text-align: center
-        padding: 1rem
+      .copyright
+          color: #ff7800
+          text-align: center
+          padding: 1rem
 </style>
