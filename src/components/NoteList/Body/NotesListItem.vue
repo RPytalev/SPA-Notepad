@@ -3,9 +3,9 @@
          this.item.id == selectedNoteId ? 'selected' : '']" 
          @click="sendSelectedNoteId" 
          @dblclick="switchReminder">
-
-        <h2>{{ title }}</h2>
         <p>{{ this.item.date }}</p>
+        <h2>{{ title }}</h2>
+        <p>{{ this.item.rawText }}</p>
         <hr size="1" color="#4a4545" />
     </div>
 </template>
@@ -42,22 +42,25 @@
 </script>
 
 <style lang="sass" scoped>
+h2, p
+    margin: 0
+    padding: 0
+
 .note
     display: flex
     flex-flow: column
-    margin: 0
-    padding: 0
     width: 100%
-    height: 10rem
+    height: 7rem
+    margin: .1rem 0
     background-color: rgb(42, 39, 39)
     color: #fff
     cursor: pointer
 
 hr
-    position: relative
     display: flex
     justify-self: center
     width: 90%
+
 
 .reminder
     border-left: .3rem solid aqua

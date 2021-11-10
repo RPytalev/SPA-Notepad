@@ -1,31 +1,92 @@
 {
-    "notesList": [
-        {
-          "id": 1,
-          "title": "",
-          "rawText": "Test title 1\n test Text 1 #111",
-          "tags": [
-            "#111"
-          ],
-          "reminder": false
-        },
-        {
-            "id": 2,
-            "title": "",
-            "rawText": "Test title 1\n test Text 2 #222",
-            "tags": [
-              "#222"
-            ],
-            "reminder": false
-        },
-        {
-            "id": 3,
-            "title": "",
-            "rawText": "Test title 1\n test Text 3 #333",
-            "tags": [
-              "#333"
-            ],
-            "reminder": false
-        }
-    ]  
+  "notesList": [
+    {
+      "date": "2021.10.10 15:36",
+      "id": 543,
+      "rawText": "Project SPA Notepad\n#JS #HTML #CSS #Vue #Sass #API #REST #HTTP\n",
+      "tags": [
+        "#finish"
+      ],
+      "reminder": false
+    },
+    {
+      "date": "2021.10.10 15:32",
+      "id": 708,
+      "rawText": "Shopping\n #shopping #clothes #shoe #food #beverages #desserts \n",
+      "tags": [
+        "#shopping",
+        "#clothes",
+        "#shoe",
+        "#food",
+        "#beverages",
+        "#desserts"
+      ],
+      "reminder": false
+    },
+    {
+      "date": "2021-11-10T19:44:21.465Z",
+      "id": 773,
+      "rawText": "Training\nDecember 1st at 20:00 pm\n#training #sport #health #gym",
+      "tags": [
+        "#training",
+        "#sport",
+        "#health",
+        "#gym"
+      ],
+      "reminder": true
+    },
+    {
+      "date": "2021-11-10T19:42:18.800Z",
+      "id": 85,
+      "rawText": "Meeting with Nick\nNovember 10th at 16:00 pm\n#meeting #SPA #API #REST #debugging \n\nTEST TEST ETS",
+      "tags": [
+        "#meeting",
+        "#SPA",
+        "#API",
+        "#REST",
+        "#debugging"
+      ],
+      "reminder": false
+    },
+    {
+      "date": "2021.10.10 15:32",
+      "id": 62,
+      "rawText": "Christmas\n#Christmas #Happy #new #Year #gifts \n",
+      "tags": [
+        "#Christmas",
+        "#Happy",
+        "#new",
+        "#Year",
+        "#gifts"
+      ],
+      "reminder": true
+    },
+    {
+      "date": "2021.10.10 15:34",
+      "id": 45,
+      "rawText": "Courses\n#JS #HTML #CSS\n",
+      "tags": [
+        "#JS",
+        "#HTML",
+        "#CSS",
+        "#Vue",
+        "#Sass"
+      ],
+      "reminder": false
+    },
+    {
+      "date": "2021.10.10 20:7",
+      "id": 901,
+      "rawText": "New Note\nvgvgvggv\n",
+      "tags": [],
+      "reminder": false
+    },
+    {
+      "date": "2021-11-10T19:43:04.519Z",
+      "id": 671,
+      "rawText": "Test note \n\nTEST TEST",
+      "tags": [],
+      "reminder": false
+    }
+  ]
 }

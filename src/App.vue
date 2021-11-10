@@ -45,23 +45,44 @@
       NoteEditorDisplay
     },
     methods: {
-      createNote() {
+      async createNote() {
+
         const noteNew = {
-            id: Math.floor(Math.random() * 1000),
-            rawText: 'New Note\n',
-            date: new Date(),
-            tags: [],
-            reminder: false
+          date: this.getDate(),
+          id: Math.floor(Math.random() * 1000),
+          rawText: 'New Note\n',
+          tags: [],
+          reminder: false
         }
+        
+        await fetch('http://localhost:5000/notesList', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json'
+          },
+          body: JSON.stringify(noteNew)
+        });
+
         this.notesList.unshift(noteNew);
         this.selectedNoteId = noteNew.id;
       },
-      editNote(noteChange) {
-        let note = this.notesList.filter(( item ) => item.id === noteChange.id)[0];
-        note.rawText = noteChange.rawText;
-        note.date = noteChange.date;
-        note.tags = note.rawText.match(/#[a-zA-Z0-9]+/g);
-        note.tags = [...new Set(note.tags)];
+      async editNote(noteChange) {
+        let noteToUpdate = this.notesList.filter(( item ) => item.id === noteChange.id)[0]; 
+
+        let tags = noteChange.rawText.match(/#[a-zA-Z0-9]+/g);
+
+        noteToUpdate.rawText = noteChange.rawText;
+        noteToUpdate.date = noteChange.date;
+        noteToUpdate.tags = [...new Set(tags)];
+
+        await fetch(`http://localhost:5000/notesList/${noteChange.id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-type' : 'application/json'
+          },
+          body: JSON.stringify(noteToUpdate)
+        });
+        
         if (this.tagDisplayState === false) {
           this.tagDisplayState = !this.tagDisplayState;
         }
@@ -70,20 +91,34 @@
       searchNote(searchTag) {
         this.searchTag = searchTag;
       },
-      deleteNote() {
-            this.notesList = this.notesList.filter(( item ) => item.id !== this.selectedNoteId);
+      async deleteNote() {
+        const res = await fetch(`http://localhost:5000/notesList/${this.selectedNoteId}`, {
+          method: 'DELETE'
+        });
+        res.status === 200 ? (this.notesList = this.notesList.filter(( item ) => item.id !== this.selectedNoteId)) : alert('Error deleting note');
 
-            if (this.notesList.length === 0)
-            {
-              this.createNote();
-            } else {
-              this.selectedNoteId = this.notesList[0].id;
-            }
+        if (this.notesList.length === 0)
+        {
+          this.createNote();
+        } else {
+          this.selectedNoteId = this.notesList[0].id;
+        }
       },
       sendSelectedNoteId(id) {
         this.selectedNoteId = id;
       },
-      switchReminder(id) {
+      async switchReminder(id) {
+        const noteToSwitchReminder = this.notesList.filter(note => note.id === id)[0];
+        const updateReminderState = {...noteToSwitchReminder, reminder: !noteToSwitchReminder.reminder};
+
+        await fetch(`http://localhost:5000/notesList/${id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-type' : 'application/json'
+          },
+          body: JSON.stringify(updateReminderState)
+        });
+
         this.notesList = this.notesList.map((item) => item.id == id ? {...item, reminder: !item.reminder} : item)
       },
       toggleNoteDisplay() {
@@ -95,12 +130,29 @@
       async fetchNotesList() {
         const res = await fetch('http://localhost:5000/notesList');
         const data = await res.json();
-        return data
+        return data;
+      },
+      getDate() {
+        let currenDate = new Date();
+        let year = currenDate.getFullYear();
+        let month = currenDate.getMonth();
+        let day = currenDate.getDate();
+        let hours = currenDate.getHours();
+        let minutes = currenDate.getMinutes();
+        let date = `${year}.${month}.${day} ${hours}:${minutes}`;
+        return date;
       }
     },
   data() {
     return {
-      notesList: [],
+      notesList: [{
+        'date': '0000.00.00 00:00',
+        'id': 0,
+        'title': 'New Note',
+        'rawText': '',
+        'tags': ['new'],
+        'reminder': false
+      },],
       searchTag: '',
       selectedNoteId: 0,
       switchNoteEditorState: false,
@@ -129,36 +181,9 @@
       return this.searchTag === '' ? this.notesList : this.notesList.filter(note => note.tags.includes(this.searchTag, 0) )
     }
   },
-  created() {
-    this.notesList = [
-        {
-          "id": 1,
-          "title": "",
-          "rawText": "Test title 1\n test Text 1 #111",
-          "tags": [
-            "#111"
-          ],
-          "reminder": false
-        },
-        {
-            "id": 2,
-            "title": "",
-            "rawText": "Test title 2\n test Text 2 #222",
-            "tags": [
-              "#222"
-            ],
-            "reminder": false
-        },
-        {
-            "id": 3,
-            "title": "",
-            "rawText": "Test title 3\n test Text 3 #333",
-            "tags": [
-              "#333"
-            ],
-            "reminder": false
-        }
-      ],
+  async created() {
+    this.notesList = await this.fetchNotesList();
+    console.log(this.notesList);
     this.selectedNoteId = this.notesList[0].id;
   }
 }
@@ -251,12 +276,13 @@ html
         background-color: rgb(42, 39, 39)
         color: lightgrey
         border-right: .1rem solid #000
-        overflow-y: scroll
+        overflow-y: auto
 
       .note-editor-display
         display: flex
         flex-flow: column
         flex-basis: 70%
+        overflow-y: auto
 
     .footer
       display: flex

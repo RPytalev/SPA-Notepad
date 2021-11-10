@@ -13,7 +13,6 @@
         name: 'NoteEdit',
         methods: {
             editNote(event) {
-                
                 let rawText = event.target.value;
                 
                 const noteChange = {
