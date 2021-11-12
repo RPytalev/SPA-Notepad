@@ -37,6 +37,7 @@
 <script>
   import NotesListDisplay from './components/NoteList/Body/NotesListDisplay.vue'
   import NoteEditorDisplay from './components/NoteEditor/Body/NoteEditorDisplay.vue'
+  import { API } from './constants.js';
 
   export default {
     name: "App",
@@ -55,7 +56,7 @@
           reminder: false
         }
         
-        await fetch('http://localhost:5000/notesList', {
+        await fetch(`${API}/notesList`, {
           method: 'POST',
           headers: {
             'Content-type': 'application/json'
@@ -75,7 +76,7 @@
         noteToUpdate.date = noteChange.date;
         noteToUpdate.tags = [...new Set(tags)];
 
-        await fetch(`http://localhost:5000/notesList/${noteChange.id}`, {
+        await fetch(`${API}/notesList/${noteChange.id}`, {
           method: 'PUT',
           headers: {
             'Content-type' : 'application/json'
@@ -92,7 +93,7 @@
         this.searchTag = searchTag;
       },
       async deleteNote() {
-        const res = await fetch(`http://localhost:5000/notesList/${this.selectedNoteId}`, {
+        const res = await fetch(`${API}/notesList/notesList/${this.selectedNoteId}`, {
           method: 'DELETE'
         });
         res.status === 200 ? (this.notesList = this.notesList.filter(( item ) => item.id !== this.selectedNoteId)) : alert('Error deleting note');
@@ -111,7 +112,7 @@
         const noteToSwitchReminder = this.notesList.filter(note => note.id === id)[0];
         const updateReminderState = {...noteToSwitchReminder, reminder: !noteToSwitchReminder.reminder};
 
-        await fetch(`http://localhost:5000/notesList/${id}`, {
+        await fetch(`${API}/notesList/${id}`, {
           method: 'PUT',
           headers: {
             'Content-type' : 'application/json'
@@ -128,8 +129,9 @@
         this.switchNoteEditorState = !this.switchNoteEditorState;
       },
       async fetchNotesList() {
-        const res = await fetch('http://localhost:5000/notesList');
+        const res = await fetch(`${API}/notesList`);
         const data = await res.json();
+        
         return data;
       },
       getDate() {
