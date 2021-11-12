@@ -93,7 +93,7 @@
         this.searchTag = searchTag;
       },
       async deleteNote() {
-        const res = await fetch(`${API}/notesList/notesList/${this.selectedNoteId}`, {
+        const res = await fetch(`${API}/notesList/${this.selectedNoteId}`, {
           method: 'DELETE'
         });
         res.status === 200 ? (this.notesList = this.notesList.filter(( item ) => item.id !== this.selectedNoteId)) : alert('Error deleting note');
